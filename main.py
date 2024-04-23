@@ -19,15 +19,24 @@ def print_directory_tree(startpath, output_file):
     exclude_dirs = {'node_modules', 'vendor', 'target'}  # Set de directorios a excluir por defecto
     with open(output_file, 'w') as file:
         for root, dirs, files in os.walk(startpath, topdown=True):
-            # Filtra directorios tanto por nombre específico como por patrón
+            # Filtra los directorios y archivos que deben ser excluidos
             dirs[:] = [d for d in dirs if d not in exclude_dirs and not should_exclude(d)]
+            files = [f for f in files if not should_exclude(f)]
+            
+            # Ordena directorios y archivos alfabéticamente
+            dirs.sort()
+            files.sort()
+
             level = root.replace(startpath, '').count(os.sep)
             indent = '│   ' * (level)
             print(f"{indent}├── {os.path.basename(root)}/", file=file)
             subindent = '│   ' * (level + 1)
+            
+            # Imprime primero los directorios, luego los archivos, conforme al estilo VS Code
+            for d in dirs:
+                print(f"{subindent}├── {d}/", file=file)
             for f in files:
-                if not should_exclude(f):  # También podrías querer filtrar archivos por patrones similares
-                    print(f"{subindent}├── {f}", file=file)
+                print(f"{subindent}├── {f}", file=file)
 
 def main():
     parser = argparse.ArgumentParser(description="Display directory tree")
