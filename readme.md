@@ -16,6 +16,10 @@ Este script utiliza módulos estándar de Python, por lo tanto no requiere la in
 Asegúrate de tener Python instalado en tu sistema. Si decides implementar visualizaciones gráficas avanzadas
 o añadir nuevas funcionalidades que requieran módulos externos, deberás gestionar las dependencias correspondientes.
 
+```bash
+pip install -r requirements.txt
+```
+
 ## Uso del Script
 
 Para usar este script, sigue estos pasos:
